@@ -1,15 +1,22 @@
-const detail = events
+async function data(){
+    await fetch("https://mind-hub.up.railway.app/amazing")
+    .then(response => response.json())
+    .then(json=> data = json)
+}
+
+
+
 let query = location.search
-console.log(query)
+
 
 let getter = new URLSearchParams(query)
-console.log(getter)
+
 
 let id = parseInt(getter.get("id"))
-console.log(id)
+
 
 let evento = detail.find((item) => item._id === id)
-console.log(evento)
+
 
 let card = document.getElementById("detail")
 
