@@ -3,7 +3,6 @@ let search = document.getElementById("buscador")
 let searchTexto= document.getElementById("buscar-text")
 let checkBox = document.getElementById("check")
 
-
 function cards (data){
     card.innerHTML= ''
     data.forEach(item => {
@@ -43,26 +42,20 @@ function filterCategory(array){
     return array
 }
 
-
-
 async function cardApi (){
     try{
-        let data = await fetch("https://mind-hub.up.railway.app/amazing")
+        let data = await fetch("https://mind-hub.up.railway.app/amazing/")
         data = await data.json()
         let events = data.events.sort((a,b)=> a.name.localeCompare(b.name))
         cards(events)
-
         let category = new Set(events.map(item => item.category))
-        category =[...category]
-
+        category = [...category]
         checks(category)
-
         search.addEventListener("click",()=>{
             let filterText = searchText(searchTexto.value,data.events)
             let filterCat = filterCategory(filterText)
             cards(filterCat)
         })
-        
         checkBox.addEventListener("change",()=>{
             let filterText = searchText(searchTexto.value,data.events)
             let filterCat = filterCategory(filterText)
