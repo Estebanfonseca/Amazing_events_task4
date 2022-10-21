@@ -1,11 +1,8 @@
-let home = events.map(function(event){
-    return event
-}).sort((a,b)=> a.name.localeCompare(b.name))
-
 let card = document.getElementById("section")
 let search = document.getElementById("buscador")
 let searchTexto= document.getElementById("buscar-text")
 let checkBox = document.getElementById("check")
+
 
 function cards (data){
     card.innerHTML= ''
@@ -16,13 +13,52 @@ function cards (data){
         <article class="card-body">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
-            <a href="./details.html?id=${item._id}" class="nav-link text-white btn btn-secondary" id="btn-details">see more</a>
+            <a href="./details.html?id=${item.id}" class="nav-link text-white btn btn-secondary" id="btn-details">see more</a>
         </article>`
         card.appendChild(carta)
     })
 }
 
-cards(home)
+function checks(data){
+    data.forEach(item => {
+        checkBox.innerHTML += `
+        <input type="checkbox" id="${item}" value="${item}" name="${item}" />
+        <label class="pe-3" for="${item}">${item}</label>`
+    })
+}
+
+
+async function cardApi (){
+    try{
+        let data = await fetch("https://mind-hub.up.railway.app/amazing")
+        data = await data.json()
+        let events = data.events.sort((a,b)=> a.name.localeCompare(b.name))
+        cards(events)
+
+        let category = new Set(events.map(item => item.category))
+        category =[...category]
+
+        checks(category)
+
+        search.addEventListener("click",()=>{
+            let filterText = searchText(searchTexto.value,data.events)
+            let filterCat = filterCategory(filterText)
+            cards(filterCat)
+        })
+        
+        checkBox.addEventListener("change",()=>{
+            let filterText = searchText(searchTexto.value,data.events)
+            let filterCat = filterCategory(filterText)
+            cards(filterCat) 
+        })
+    }
+    catch{
+        alert("404 not found")
+    }
+}
+cardApi()
+
+
 
 function searchText(text , array){
     let arrayFilter = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()))
@@ -42,16 +78,6 @@ function filterCategory(array){
 }
 
 
-search.addEventListener("click",()=>{
-    let filterText = searchText(searchTexto.value,home)
-    let filterCat = filterCategory(filterText)
-    cards(filterCat)
-})
 
-checkBox.addEventListener("change",()=>{
-    let filterText = searchText(searchTexto.value,home)
-    let filterCat = filterCategory(filterText)
-    cards(filterCat) 
-})
 
 

@@ -1,8 +1,10 @@
 async function data(){
-    await fetch("https://mind-hub.up.railway.app/amazing")
-    .then(response => response.json())
-    .then(json=> data = json)
+    let data = await fetch("https://mind-hub.up.railway.app/amazing")
+    data = await data.json()
+    console.log(data)
 }
+let detail = data()
+
 
 
 
@@ -15,7 +17,7 @@ let getter = new URLSearchParams(query)
 let id = parseInt(getter.get("id"))
 
 
-let evento = detail.find((item) => item._id === id)
+let evento = detail.events.find((item) => item._id === id)
 
 
 let card = document.getElementById("detail")
@@ -45,7 +47,7 @@ card.innerHTML = `
                 <p class="card-text">${evento.price}</p>
             </article>
             </div>`
-// 
+
 
 
 
