@@ -26,6 +26,23 @@ function checks(data){
         <label class="pe-3" for="${item}">${item}</label>`
     })
 }
+function searchText(text , array){
+    let arrayFilter = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()))
+    return arrayFilter
+}
+
+function filterCategory(array){
+    let checkbox = document.querySelectorAll('input[type="checkbox"]')
+    let newCheckbox = Array.from(checkbox)
+    let filterCheck = newCheckbox.filter(check => check.checked)
+    let checkMark = filterCheck.map(box => box.value)
+    if(checkMark.length > 0){
+        let arrayFiltrado = array.filter(event => checkMark.includes(event.category))
+        return arrayFiltrado
+    }
+    return array
+}
+
 
 
 async function cardApi (){
@@ -60,22 +77,6 @@ cardApi()
 
 
 
-function searchText(text , array){
-    let arrayFilter = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()))
-    return arrayFilter
-}
-
-function filterCategory(array){
-    let checkbox = document.querySelectorAll('input[type="checkbox"]')
-    let newCheckbox = Array.from(checkbox)
-    let filterCheck = newCheckbox.filter(check => check.checked)
-    let checkMark = filterCheck.map(box => box.value)
-    if(checkMark.length > 0){
-        let arrayFiltrado = array.filter(event => checkMark.includes(event.category))
-        return arrayFiltrado
-    }
-    return array
-}
 
 
 
