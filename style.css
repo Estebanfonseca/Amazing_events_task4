@@ -178,7 +178,7 @@ h2 {
     justify-content:space-between;
     
 }
-.card-body a:hover {
+a:hover {
     transform: scale(1.1);
     transition: all 0.7s;
     

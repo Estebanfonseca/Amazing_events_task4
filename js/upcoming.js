@@ -12,7 +12,7 @@ function cards (data){
         <article class="card-body">
             <h4>${item.name}</h4>
             <p>${item.description}</p>
-            <a href="./details.html?id=${item._id}" class="nav-link text-white btn btn-secondary" id="btn-details">see more</a>
+            <a href="./details.html?id=${item.id}" class="nav-link text-white btn btn-secondary" id="btn-details">see more</a>
         </article>`
         card.appendChild(carta)
     })
