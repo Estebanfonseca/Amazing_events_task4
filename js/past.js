@@ -48,7 +48,6 @@ async function cardApi (){
         let data = await fetch("https://mind-hub.up.railway.app/amazing?time=past")
         data = await data.json()
         let events = data.events.sort((a,b)=> a.name.localeCompare(b.name))
-        console.log(events)
         cards(events)
         let category = new Set(events.map(item => item.category))
         category = [...category]

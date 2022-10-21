@@ -1,16 +1,7 @@
-let fecha = Date.parse(currentDate)
-
-let upcomming = events.filter(function(date){
-    return Date.parse(date.date) > fecha
-}).sort((a,b)=> a.name.localeCompare(b.name))
-
-
 let card = document.getElementById('section1')
 let search = document.getElementById("buscador2")
 let searchTexto= document.getElementById("buscar-text2")
 let checkBox = document.getElementById("check2")
-
-
 
 function cards (data){
     card.innerHTML= ''
@@ -27,7 +18,13 @@ function cards (data){
     })
 }
 
-cards(upcomming)
+function checks(data){
+    data.forEach(item => {
+        checkBox.innerHTML += `
+        <input type="checkbox" id="${item}" value="${item}" name="${item}" />
+        <label class="pe-3" for="${item}">${item}</label>`
+    })
+}
 
 function searchText(text , array){
     let arrayFilter = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()))
@@ -46,14 +43,28 @@ function filterCategory(array){
     return array
 }
 
-search.addEventListener("click",()=>{
-    let filterText = searchText(searchTexto.value,upcomming)
-    let filterCat = filterCategory(filterText)
-    cards(filterCat)
-})
-
-checkBox.addEventListener("change",()=>{
-    let filterText = searchText(searchTexto.value,upcomming)
-    let filterCat = filterCategory(filterText)
-    cards(filterCat) 
-})
+async function cardApi (){
+    try{
+        let data = await fetch("https://mind-hub.up.railway.app/amazing?time=upcoming")
+        data = await data.json()
+        let events = data.events.sort((a,b)=> a.name.localeCompare(b.name))
+        cards(events)
+        let category = new Set(events.map(item => item.category))
+        category = [...category]
+        checks(category)
+        search.addEventListener("click",()=>{
+            let filterText = searchText(searchTexto.value,data.events)
+            let filterCat = filterCategory(filterText)
+            cards(filterCat)
+        })
+        checkBox.addEventListener("change",()=>{
+            let filterText = searchText(searchTexto.value,data.events)
+            let filterCat = filterCategory(filterText)
+            cards(filterCat) 
+        })
+    }
+    catch{
+        alert("404 not found")
+    }
+}
+cardApi()
