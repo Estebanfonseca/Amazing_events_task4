@@ -25,6 +25,7 @@ function checks(data){
         <label class="pe-3" for="${item}">${item}</label>`
     })
 }
+
 function searchText(text , array){
     let arrayFilter = array.filter(event => event.name.toLowerCase().includes(text.toLowerCase()))
     return arrayFilter
