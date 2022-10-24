@@ -36,7 +36,6 @@ async function data(id){
         let data = await fetch("https://mind-hub.up.railway.app/amazing/"+id)
         data = await data.json()
         let card = data.event
-        console.log(card)
         cards(card)
     }
     catch{
