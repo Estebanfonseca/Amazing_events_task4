@@ -9,8 +9,8 @@ function cards (array){
 </svg>Back
 </a>
 
-            <div class="card rounded-4 p-3 ms-5" id="card_detail">
-            <img src="${array.image}" class=" rounded-5 " alt="${array.name}"  width="50%">
+            <div class="card rounded-4 p-3 ms-5 d-flex flex-column" id="card_detail">
+            <img src="${array.image}" class=" rounded-5 " alt="${array.name}" >
             <article class="card-body">
                 <h3 class="card-title">${array.name}</h3>
                 <p class="card-text">${array.description}</p>
