@@ -5,6 +5,7 @@ let checkBox = document.getElementById("check2")
 
 function cards (data){
     card.innerHTML= ''
+    if(data.length>0){
     data.forEach(item => {
         let carta = document.createElement('div')
         carta.className ='card rounded-4 '
@@ -16,6 +17,9 @@ function cards (data){
         </article>`
         card.appendChild(carta)
     })
+}else{
+    card.innerHTML= `<h2>search not found</h2>`
+}
 }
 
 function checks(data){
@@ -52,12 +56,17 @@ async function cardApi (){
         let category = new Set(events.map(item => item.category))
         category = [...category]
         checks(category)
-        search.addEventListener("click",()=>{
+        search.addEventListener("keyup",()=>{
             let filterText = searchText(searchTexto.value,data.events)
             let filterCat = filterCategory(filterText)
             cards(filterCat)
         })
         checkBox.addEventListener("change",()=>{
+            let filterText = searchText(searchTexto.value,data.events)
+            let filterCat = filterCategory(filterText)
+            cards(filterCat) 
+        })
+        searchTexto.addEventListener("keyup",()=>{
             let filterText = searchText(searchTexto.value,data.events)
             let filterCat = filterCategory(filterText)
             cards(filterCat) 
