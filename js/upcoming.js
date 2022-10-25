@@ -49,7 +49,7 @@ function filterCategory(array){
 
 async function cardApi (){
     try{
-        let data = await fetch("https://mind-hub.up.railway.app/amazing?time=upcoming")
+        let data = await fetch("https://mh-amazing.herokuapp.com/amazing?time=upcoming")
         data = await data.json()
         let events = data.events.sort((a,b)=> a.name.localeCompare(b.name))
         cards(events)

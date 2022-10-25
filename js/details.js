@@ -33,7 +33,7 @@ let id = getter.get("id")
 
 async function data(id){
     try{
-        let data = await fetch("https://mind-hub.up.railway.app/amazing/"+id)
+        let data = await fetch("https://mh-amazing.herokuapp.com/amazing/"+id)
         data = await data.json()
         let card = data.event
         cards(card)

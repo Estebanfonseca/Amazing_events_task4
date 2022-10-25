@@ -14,17 +14,19 @@ function rows(array, index) {
 
 async function tableSingle() {
     try {
-        let table = await fetch("https://mind-hub.up.railway.app/amazing?time=past");
+        let table = await fetch("https://mh-amazing.herokuapp.com/amazing?time=past");
         table = await table.json();
-        let assisMax = table.events.map((item) => item).sort((a, b) => b.assistance - a.assistance);
-        assisMax = assisMax[0];
-        singleRow(assisMax, 0);
-        let assisMin = table.events.map((item) => item).sort((a, b) => a.assistance - b.assistance);
+        let assisMax = table.events.map((item) => ({name:item.name,maxassis:(item.assistance * 100) / item.capacity})).sort((a,b)=> b.maxassis - a.maxassis)
+        assisMax = assisMax[0]
+        singleRow(assisMax,0)
+        let assisMin = table.events.map((item) => ({name:item.name,maxassis:(item.assistance * 100) / item.capacity})).sort((a, b) => a.assistance - b.assistance);
         assisMin = assisMin[0];
         singleRow(assisMin, 0);
         let capMax = table.events.map((item) => item).sort((a, b) => b.capacity - a.capacity);
         capMax = capMax[0];
+        console.log(capMax)
         singleRow(capMax, 0);
+        console.table(table.events)
     } catch {
         alert("404 not found");
     }
@@ -33,7 +35,7 @@ tableSingle();
 
 async function tableFuture() {
     try {
-        let table = await fetch("https://mind-hub.up.railway.app/amazing?time=upcoming");
+        let table = await fetch("https://mh-amazing.herokuapp.com/amazing?time=upcoming");
         table = await table.json();
         let data = table.events.sort((a, b) => a.category.localeCompare(b.category));
         let categories = data.map((item) => ({
@@ -73,7 +75,7 @@ tableFuture();
 
 async function tablePast() {
     try {
-        let table = await fetch("https://mind-hub.up.railway.app/amazing?time=past");
+        let table = await fetch("https://mh-amazing.herokuapp.com/amazing?time=past");
         table = await table.json();
         let data = table.events.sort((a, b) => a.category.localeCompare(b.category));
         let categories = data.map((item) => ({
