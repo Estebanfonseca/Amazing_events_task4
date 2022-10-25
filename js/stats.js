@@ -24,9 +24,7 @@ async function tableSingle() {
         singleRow(assisMin, 0);
         let capMax = table.events.map((item) => item).sort((a, b) => b.capacity - a.capacity);
         capMax = capMax[0];
-        console.log(capMax)
         singleRow(capMax, 0);
-        console.table(table.events)
     } catch {
         alert("404 not found");
     }
